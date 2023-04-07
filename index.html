@@ -1,65 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue Mastery</title>
+    <!-- Import Styles -->
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Vue Mastery</title>
-  <!-- Import Styles -->
-  <link rel="stylesheet" href="./assets/styles.css" />
-  <!-- Import Vue.js -->
-  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
-</head>
+  <body>
+    <div id="app">
+      <div class="nav-bar"></div>
 
-<body>
-  <div id="app">
-    <div class="nav-bar"></div>
+      <div class="cart">Cart ({{ cart }})</div>
 
-    <div class="cart">Cart ({{ cart }})</div>
-
-    <div class="product-display">
-      <div class="product-container">
-        <div class="product-image">
-          <img :src="image">
-        </div>
-        <div class="product-info">
-          <h1>{{ product }}</h1>
-          <p v-if="inventory > 10">Stock: In Stock | <span v-if="onSale">On Sale!</span></p>
-          <p v-else-if="inventory <= 10 && inventory > 0">Stock: Almost sold out! | <span v-if="onSale">On Sale!</span>
-          </p>
-          <p v-else>Stock: Out Of Stock</p>
-          <p>{{ description }}</p>
-          <ul>
-            <li v-for="detail in details">{{ detail }}</li>
-          </ul>
-
-          <div class="productColors">
-            <div v-for="variant in variants" :key="variant.id" class="color-option">
-              <input type="radio" :key="variant.id" v-model="selectedVariantId" :value="variant.id"
-                @mouseover="updateImage(variant.image)" :name="'productColor-' + variant.id"
-                :id="'productColor-' + variant.id" />
-              <label class="color-circle" :key="variant.id" :for="'productColor-' + variant.id"
-                :style="{ backgroundColor: variant.color }"></label>
-            </div>
+      <div class="product-display">
+        <div class="product-container">
+          <div class="product-image">
+            <img :src="image" />
           </div>
+          <div class="product-info">
+            <h1>{{ product }}</h1>
+            <p v-if="inventory > 10">
+              Stock: In Stock | <span v-if="onSale">On Sale!</span>
+            </p>
+            <p v-else-if="inventory <= 10 && inventory > 0">
+              Stock: Almost sold out! | <span v-if="onSale">On Sale!</span>
+            </p>
+            <p v-else>Stock: Out Of Stock</p>
+            <p>{{ description }}</p>
+            <ul>
+              <li v-for="detail in details">{{ detail }}</li>
+            </ul>
 
+            <div class="productColors">
+              <div
+                v-for="variant in variants"
+                :key="variant.id"
+                class="color-option"
+              >
+                <input
+                  type="radio"
+                  :key="variant.id"
+                  v-model="selectedVariantId"
+                  :value="variant.id"
+                  @mouseover="updateImage(variant.image)"
+                  :name="'productColor-' + variant.id"
+                  :id="'productColor-' + variant.id"
+                />
+                <label
+                  class="color-circle"
+                  :key="variant.id"
+                  :for="'productColor-' + variant.id"
+                  :style="{ backgroundColor: variant.color }"
+                ></label>
+              </div>
+            </div>
 
-          <button class="button" @click="addToCart()" :class="{ disabledButton: inventory <= 0 }"
-            :disabled="inventory <= 0">Add to Cart</button>
-          <button class="button" :class="{ disabledButton: cart <= 0 }" :disabled="cart <= 0"
-            @click="removeFromCart()">Remove Item</button>
-          <a :href="url">Made by Jelica R.</a>
+            <button
+              class="button"
+              @click="addToCart()"
+              :class="{ disabledButton: inventory <= 0 }"
+              :disabled="inventory <= 0"
+            >
+              Add to Cart
+            </button>
+            <button
+              class="button"
+              :class="{ disabledButton: cart <= 0 }"
+              :disabled="cart <= 0"
+              @click="removeFromCart()"
+            >
+              Remove Item
+            </button>
+            <a :href="url">Made by Jelica R.</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Import App -->
-  <script src="./main.js"></script>
+    <!-- Import App -->
+    <script src="./main.js"></script>
 
-  <!-- Mount App -->
-  <script>
-    const mountedApp = app.mount('#app')
-  </script>
-</body>
-
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount("#app");
+    </script>
+  </body>
 </html>

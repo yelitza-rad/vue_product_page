@@ -54,7 +54,7 @@ body {
   height: 50px;
 }
 
-.color-option input[type="radio"]:checked+label {
+.color-option input[type="radio"]:checked + label {
   border: 3px solid black;
 }
 
