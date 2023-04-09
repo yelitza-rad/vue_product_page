@@ -22,10 +22,10 @@
           </div>
           <div class="product-info">
             <h1>{{ product }}</h1>
-            <p v-if="inventory > 10">
+            <p v-if="inStock > 10">
               Stock: In Stock | <span v-if="onSale">On Sale!</span>
             </p>
-            <p v-else-if="inventory <= 10 && inventory > 0">
+            <p v-else-if="inStock <= 10 && inStock > 0">
               Stock: Almost sold out! | <span v-if="onSale">On Sale!</span>
             </p>
             <p v-else>Stock: Out Of Stock</p>
@@ -36,7 +36,7 @@
 
             <div class="productColors">
               <div
-                v-for="variant in variants"
+                v-for="(variant, index) in variants"
                 :key="variant.id"
                 class="color-option"
               >
@@ -45,7 +45,7 @@
                   :key="variant.id"
                   v-model="selectedVariantId"
                   :value="variant.id"
-                  @mouseover="updateImage(variant.image)"
+                  @mouseover="updateVariant(index)"
                   :name="'productColor-' + variant.id"
                   :id="'productColor-' + variant.id"
                 />
@@ -61,8 +61,8 @@
             <button
               class="button"
               @click="addToCart()"
-              :class="{ disabledButton: inventory <= 0 }"
-              :disabled="inventory <= 0"
+              :class="{ disabledButton: inStock <= 0 }"
+              :disabled="inStock <= 0"
             >
               Add to Cart
             </button>
