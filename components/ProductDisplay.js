@@ -1,5 +1,9 @@
 app.component("product-display", {
   props: {
+    cart: {
+      type: Number,
+      required: true,
+    },
     premium: {
       type: Boolean,
       required: true,
@@ -57,15 +61,15 @@ app.component("product-display", {
             <button
               class="button"
               @click="addToCart()"
-              :class="{ disabledButton: inStock <= 0 }"
-              :disabled="inStock <= 0"
+              :class="{ disabledButton: !inStock }"
+              :disabled="!inStock"
             >
               Add to Cart
             </button>
             <button
               class="button"
-              :class="{ disabledButton: cart <= 0 }"
-              :disabled="cart <= 0"
+              :class="{ disabledButton: cart === 0 }"
+              :disabled="cart === 0"
               @click="removeFromCart()"
             >
               Remove Item
@@ -110,12 +114,10 @@ app.component("product-display", {
 
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit("add-to-cart", { eventName: "add-to-cart" });
     },
     removeFromCart() {
-      if (this.cart >= 1) {
-        this.cart -= 1;
-      }
+      this.$emit("remove-from-cart", { eventName: "remove-from-cart" });
     },
     setActive(index) {
       this.activeIndex = index;
