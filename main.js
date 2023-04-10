@@ -1,7 +1,7 @@
 const app = Vue.createApp({
   data() {
     return {
-      cart: 0,
+      cart: [],
       premium: true,
     };
   },
@@ -9,9 +9,15 @@ const app = Vue.createApp({
   methods: {
     updateCart(event) {
       if (event.eventName === "add-to-cart") {
-        this.cart += 1;
-      } else if (event.eventName === "remove-from-cart" && this.cart >= 1) {
-        this.cart -= 1;
+        this.cart.push(event.productId);
+      } else if (
+        event.eventName === "remove-from-cart" &&
+        this.cart.length >= 1
+      ) {
+        const index = this.cart.indexOf(event.productId);
+        if (index > -1) {
+          this.cart.splice(index, 1);
+        }
       }
     },
   },

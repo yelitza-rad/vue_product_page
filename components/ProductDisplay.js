@@ -1,7 +1,7 @@
 app.component("product-display", {
   props: {
     cart: {
-      type: Number,
+      type: Array,
       required: true,
     },
     premium: {
@@ -68,8 +68,8 @@ app.component("product-display", {
             </button>
             <button
               class="button"
-              :class="{ disabledButton: cart === 0 }"
-              :disabled="cart === 0"
+              :class="{ disabledButton: cart.length <= 0 }"
+              :disabled="cart.length <= 0"
               @click="removeFromCart()"
             >
               Remove Item
@@ -114,10 +114,16 @@ app.component("product-display", {
 
   methods: {
     addToCart() {
-      this.$emit("add-to-cart", { eventName: "add-to-cart" });
+      this.$emit("add-to-cart", {
+        eventName: "add-to-cart",
+        productId: this.variants[this.selectedVariant].id,
+      });
     },
     removeFromCart() {
-      this.$emit("remove-from-cart", { eventName: "remove-from-cart" });
+      this.$emit("remove-from-cart", {
+        eventName: "remove-from-cart",
+        productId: this.variants[this.selectedVariant].id,
+      });
     },
     setActive(index) {
       this.activeIndex = index;
@@ -127,6 +133,12 @@ app.component("product-display", {
     },
   },
   computed: {
+    product() {
+      return this.variants[this.selectedVariant].product;
+    },
+    details() {
+      return this.variants[this.selectedVariant].details;
+    },
     description() {
       return this.variants[this.selectedVariant].description;
     },
