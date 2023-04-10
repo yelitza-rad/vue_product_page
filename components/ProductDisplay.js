@@ -77,6 +77,10 @@ app.component("product-display", {
             <a :href="url">Made by Jelica R.</a>
           </div>
         </div>
+
+        <review-list v-if="hasReviews" :reviews="reviews"></review-list>
+        <review-form @review-submitted="addReview"></review-form>
+
       </div>`,
   data() {
     return {
@@ -94,6 +98,7 @@ app.component("product-display", {
           image: "./assets/images/socks_green.jpg",
           quantity: 50,
           onSale: true,
+          reviews: [],
         },
         {
           id: 2,
@@ -106,6 +111,7 @@ app.component("product-display", {
           image: "./assets/images/socks_blue.jpg",
           quantity: 0,
           onSale: false,
+          reviews: [],
         },
       ],
       selectedVariantId: null,
@@ -130,6 +136,9 @@ app.component("product-display", {
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    addReview(review) {
+      this.variants[this.selectedVariant].reviews.push(review);
     },
   },
   computed: {
@@ -158,6 +167,15 @@ app.component("product-display", {
       } else {
         return "$" + 2.99;
       }
+    },
+    hasReviews() {
+      return (
+        this.variants[this.selectedVariant].reviews &&
+        this.variants[this.selectedVariant].reviews.length > 0
+      );
+    },
+    reviews() {
+      return this.variants[this.selectedVariant].reviews;
     },
   },
 });
