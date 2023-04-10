@@ -18,6 +18,9 @@
       <product-display
         :premium="premium"
         :cart="cart"
+        :quantity="quantity"
+        @decrement-quantity="updateQuantity"
+        @increment-quantity="updateQuantity"
         @add-to-cart="updateCart"
         @remove-from-cart="updateCart"
       ></product-display>

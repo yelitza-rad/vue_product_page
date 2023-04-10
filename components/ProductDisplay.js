@@ -4,6 +4,10 @@ app.component("product-display", {
       type: Array,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
     premium: {
       type: Boolean,
       required: true,
@@ -58,6 +62,16 @@ app.component("product-display", {
               </div>
             </div>
 
+            <div class="quantity">
+              <button class="quantity-button" @click="decrementQuantity()">
+                -
+              </button>
+              <input class="quantity-input" type="number" min="0" :max="inStock" v-model="quantity"/>
+              <button class="quantity-button" @click="incrementQuantity()">
+                +
+              </button>
+            </div>
+
             <button
               class="button"
               @click="addToCart()"
@@ -96,7 +110,7 @@ app.component("product-display", {
             "Introducing our latest product - the Vue.js socks! These comfortable and stylish socks are perfect for any Vue.js enthusiast. Made from a soft and breathable material, these socks feature a colorful design inspired by the Vue.js framework. The design includes Vue.js logo and icons, making it a great gift for any web developer or tech enthusiast. These socks are perfect for wearing during coding sessions, attending meetups or conferences, or just lounging around the house. Available in a range of sizes, these Vue.js socks are a must-have for any fan of this powerful JavaScript framework. Order yours today and show off your love for Vue.js in style!",
           size: ["s", "m", "l", "xl"],
           image: "./assets/images/socks_green.jpg",
-          quantity: 50,
+          stock: 50,
           onSale: true,
           reviews: [],
         },
@@ -109,7 +123,7 @@ app.component("product-display", {
             "Introducing our latest product - the Vue.js socks! These comfortable and stylish socks are perfect for any Vue.js enthusiast. Made from a soft and breathable material, these socks feature a colorful design inspired by the Vue.js framework. The design includes Vue.js logo and icons, making it a great gift for any web developer or tech enthusiast. These socks are perfect for wearing during coding sessions, attending meetups or conferences, or just lounging around the house. Available in a range of sizes, these Vue.js socks are a must-have for any fan of this powerful JavaScript framework. Order yours today and show off your love for Vue.js in style!",
           size: ["xs", "s", "m"],
           image: "./assets/images/socks_blue.jpg",
-          quantity: 0,
+          stock: 0,
           onSale: false,
           reviews: [],
         },
@@ -119,6 +133,20 @@ app.component("product-display", {
   },
 
   methods: {
+    decrementQuantity() {
+      this.$emit("decrement-quantity", {
+        eventName: "decrement-quantity",
+        productId: this.variants[this.selectedVariant].id,
+        inStock: this.inStock,
+      });
+    },
+    incrementQuantity() {
+      this.$emit("increment-quantity", {
+        eventName: "increment-quantity",
+        productId: this.variants[this.selectedVariant].id,
+        inStock: this.inStock,
+      });
+    },
     addToCart() {
       this.$emit("add-to-cart", {
         eventName: "add-to-cart",
@@ -155,7 +183,7 @@ app.component("product-display", {
       return this.variants[this.selectedVariant].image;
     },
     inStock() {
-      return this.variants[this.selectedVariant].quantity;
+      return this.variants[this.selectedVariant].stock;
     },
     onSale() {
       return this.variants[this.selectedVariant].onSale;
