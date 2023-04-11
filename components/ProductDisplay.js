@@ -62,33 +62,36 @@ app.component("product-display", {
               </div>
             </div>
 
-            <div class="quantity">
-              <button class="quantity-button" @click="decrementQuantity()">
-                -
-              </button>
-              <input class="quantity-input" type="number" min="0" :max="inStock" v-model="quantity"/>
-              <button class="quantity-button" @click="incrementQuantity()">
-                +
-              </button>
-            </div>
+            <div class="product-page-cta">
+              <div class="quantity">
+                <button class="quantity-button" @click="decrementQuantity()">
+                  -
+                </button>
+                <input class="quantity-input" type="number" min="0" :max="inStock" v-model="quantity"/>
+                <button class="quantity-button" @click="incrementQuantity()">
+                  +
+                </button>
+              </div>
 
-            <button
-              class="button"
-              @click="addToCart()"
-              :class="{ disabledButton: !inStock }"
-              :disabled="!inStock"
-            >
-              Add to Cart
-            </button>
-            <button
-              class="button"
-              :class="{ disabledButton: cart.length <= 0 }"
-              :disabled="cart.length <= 0"
-              @click="removeFromCart()"
-            >
-              Remove Item
-            </button>
-            <a :href="url">Made by Jelica R.</a>
+              <button
+                class="button"
+                @click="addToCart()"
+                :class="{ disabledButton: !inStock }"
+                :disabled="!inStock"
+              >
+                Add to Cart
+              </button>
+
+              <button
+                class="button"
+                :class="{ disabledButton: cart.length <= 0 }"
+                :disabled="cart.length <= 0"
+                @click="removeFromCart()"
+              >
+                Remove Item
+              </button>
+              <a :href="url">Made by Jelica R.</a>
+            </div>
           </div>
         </div>
 
